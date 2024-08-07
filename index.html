@@ -724,7 +724,7 @@
         </div>`,
         'S/C': `
         <div class="analysis-item">
-            <h3>Perfeccionista (S/C ou C/S)</h3>
+            <h3>Perfeccionista (S/C)</h3>
             <p><strong>Características:</strong> Meticuloso, organizado.</p>
             <p><strong>Emoções:</strong> Preciso e focado.</p>
             <p><strong>Alvo:</strong> Manter alta qualidade e precisão.</p>
@@ -752,7 +752,7 @@
         </div>`,
         'D/C/S': `
         <div class="analysis-item">
-            <h3>Questionador (D/C/S ou S/C/D)</h3>
+            <h3>Questionador (D/C/S)</h3>
             <p><strong>Características:</strong> Investigativo, cuidadoso.</p>
             <p><strong>Emoções:</strong> Cauteloso e analítico.</p>
             <p><strong>Alvo:</strong> Buscar informações e entender detalhes.</p>
@@ -766,7 +766,7 @@
         </div>`,
         'I/S/C': `
         <div class="analysis-item">
-            <h3>Realista (I/S/C ou I/C/S)</h3>
+            <h3>Realista (I/S/C)</h3>
             <p><strong>Características:</strong> Equilibrado, compreensivo.</p>
             <p><strong>Emoções:</strong> Empático, amigável.</p>
             <p><strong>Alvo:</strong> Criar um ambiente harmonioso.</p>
@@ -780,7 +780,7 @@
         </div>`,
         'S/C/I': `
         <div class="analysis-item">
-            <h3>Defensor (S/C/I ou S/I/C)</h3>
+            <h3>Defensor (S/C/I)</h3>
             <p><strong>Características:</strong> Protetor, compreensivo.</p>
             <p><strong>Emoções:</strong> Caloroso e acolhedor.</p>
             <p><strong>Alvo:</strong> Proteger e apoiar outros.</p>
@@ -794,7 +794,7 @@
         </div>`,
         'S/D/C': `
         <div class="analysis-item">
-            <h3>Questionador (S/D/C ou S/C/D)</h3>
+            <h3>Questionador (S/D/C)</h3>
             <p><strong>Características:</strong> Investigativo, cuidadoso.</p>
             <p><strong>Emoções:</strong> Cauteloso e analítico.</p>
             <p><strong>Alvo:</strong> Buscar informações e entender detalhes.</p>
@@ -808,7 +808,10 @@
         </div>`
     };
 
+    // Criação de chave ordenada para garantir consistência
     const profiles = [profile1[0], profile2[0], profile3 ? profile3[0] : ''].sort().join('/');
+
+    // Busca no mapeamento
     return profileMap[profiles] || '<p>Perfil não encontrado.</p>';
 }
 
