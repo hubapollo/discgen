@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -156,7 +157,8 @@
 
 <body>
     <div class="container">
-        <p>Por favor, responda ao teste de acordo com quem você realmente é, não como você deseja ser.</p>
+        <h1>Bem-vindo ao Teste DISC</h1>
+        <p>Por favor, responda ao teste de acordo com quem você realmente é, não como você deseja ser. Após responder todas as perguntas, você receberá um perfil detalhado baseado em suas escolhas.</p>
         <input type="text" id="nameInput" placeholder="Digite seu nome" required>
 
         <div class="progress-bar">
@@ -187,7 +189,192 @@
                 </div>
             </div>
 
-            <!-- ... Demais perguntas omitidas para brevidade ... -->
+            <div class="card hide" id="question3">
+                <h2>Pergunta 3</h2>
+                <p>Em um ambiente com colegas, eu prefiro:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Estimular um ambiente de energia positiva e otimismo.</button>
+                    <button class="button" onclick="answerQuestion('C')">Discutir abordagens teóricas ou técnicas.</button>
+                    <button class="button" onclick="answerQuestion('D')">Concluir minhas tarefas eficientemente.</button>
+                    <button class="button" onclick="answerQuestion('S')">Criar um clima de estabilidade e confiança.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question4">
+                <h2>Pergunta 4</h2>
+                <p>Quando recebo uma tarefa de um superior, minha primeira reação é:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Pensar em como posso agregar valor com minhas ideias.</button>
+                    <button class="button" onclick="answerQuestion('D')">Determinar a melhor forma de completá-la rapidamente.</button>
+                    <button class="button" onclick="answerQuestion('C')">Analisar todos os dados e detalhes antes de começar.</button>
+                    <button class="button" onclick="answerQuestion('S')">Integrar a tarefa de forma suave ao meu fluxo de trabalho.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question5">
+                <h2>Pergunta 5</h2>
+                <p>Em situações de conflito, minha abordagem típica é:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('S')">Criar um espaço seguro para todos expressarem suas preocupações.</button>
+                    <button class="button" onclick="answerQuestion('D')">Resolver a situação rapidamente.</button>
+                    <button class="button" onclick="answerQuestion('C')">Examinar a causa raiz do conflito antes de agir.</button>
+                    <button class="button" onclick="answerQuestion('I')">Promover uma comunicação aberta e honesta.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question6">
+                <h2>Pergunta 6</h2>
+                <p>Ao definir metas para minha equipe, eu geralmente:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Defino metas que inspirem e motivem a equipe.</button>
+                    <button class="button" onclick="answerQuestion('C')">Análise a viabilidade das metas com base em dados.</button>
+                    <button class="button" onclick="answerQuestion('S')">Asseguro que as metas sejam realistas e alcançáveis.</button>
+                    <button class="button" onclick="answerQuestion('D')">Estabeleço metas desafiadoras e claras.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question7">
+                <h2>Pergunta 7</h2>
+                <p>Quando enfrento um problema inesperado, eu:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Encorajo uma abordagem criativa para resolver o problema.</button>
+                    <button class="button" onclick="answerQuestion('D')">Tomo decisões rápidas para solucioná-lo.</button>
+                    <button class="button" onclick="answerQuestion('C')">Coleto informações detalhadas antes de decidir.</button>
+                    <button class="button" onclick="answerQuestion('S')">Busco uma solução que minimize o impacto emocional.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question8">
+                <h2>Pergunta 8</h2>
+                <p>No dia a dia, eu prefiro:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Aproveitar oportunidades para socializar e trocar ideias.</button>
+                    <button class="button" onclick="answerQuestion('D')">Seguir um plano bem definido.</button>
+                    <button class="button" onclick="answerQuestion('C')">Explorar maneiras de melhorar o que já está funcionando.</button>
+                    <button class="button" onclick="answerQuestion('S')">Manter uma rotina previsível e tranquila.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question9">
+                <h2>Pergunta 9</h2>
+                <p>Quando se trata de seguir políticas e normas, minha tendência é:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Questionar e sugerir melhorias nas normas.</button>
+                    <button class="button" onclick="answerQuestion('S')">Segui-las, assegurando que todos estejam de acordo.</button>
+                    <button class="button" onclick="answerQuestion('C')">Avaliar se as normas são atuais e aplicáveis.</button>
+                    <button class="button" onclick="answerQuestion('D')">Segui-las rigorosamente para maximizar eficiência.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question10">
+                <h2>Pergunta 10</h2>
+                <p>No que diz respeito à estrutura física do escritório, eu prefiro:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Um layout que promova criatividade e interação.</button>
+                    <button class="button" onclick="answerQuestion('D')">Um espaço que facilite a produtividade.</button>
+                    <button class="button" onclick="answerQuestion('C')">Um design que inspire eficiência e precisão.</button>
+                    <button class="button" onclick="answerQuestion('S')">Um ambiente que seja acolhedor e previsível.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question11">
+                <h2>Pergunta 11</h2>
+                <p>Minha maneira preferida de comunicar-se é:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Com entusiasmo, envolvendo os outros na conversa.</button>
+                    <button class="button" onclick="answerQuestion('C')">Com clareza e suporte de dados.</button>
+                    <button class="button" onclick="answerQuestion('D')">Diretamente, para evitar mal-entendidos.</button>
+                    <button class="button" onclick="answerQuestion('S')">De forma gentil e ponderada, assegurando clareza.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question12">
+                <h2>Pergunta 12</h2>
+                <p>Quando penso sobre o ambiente de trabalho ideal, imagino:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Um lugar cheio de energia e inovação.</button>
+                    <button class="button" onclick="answerQuestion('D')">Um lugar onde tudo funciona de forma eficiente.</button>
+                    <button class="button" onclick="answerQuestion('C')">Um lugar que encoraje a análise e precisão.</button>
+                    <button class="button" onclick="answerQuestion('S')">Um lugar onde todos se sintam seguros e confiantes.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question13">
+                <h2>Pergunta 13</h2>
+                <p>Em reuniões de planejamento, minha contribuição é:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Estimular ideias e sugestões criativas.</button>
+                    <button class="button" onclick="answerQuestion('D')">Focar em resultados e prazos.</button>
+                    <button class="button" onclick="answerQuestion('C')">Propor novas formas de abordar o projeto com base em dados.</button>
+                    <button class="button" onclick="answerQuestion('S')">Assegurar que todos estejam confortáveis com o plano.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question14">
+                <h2>Pergunta 14</h2>
+                <p>Ao tomar decisões importantes, minha abordagem é:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Buscar consenso através de discussão aberta.</button>
+                    <button class="button" onclick="answerQuestion('D')">Optar pela solução mais direta e eficaz.</button>
+                    <button class="button" onclick="answerQuestion('C')">Analisar todos os dados antes de decidir.</button>
+                    <button class="button" onclick="answerQuestion('S')">Assegurar que a decisão leve em conta todas as necessidades emocionais.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question15">
+                <h2>Pergunta 15</h2>
+                <p>Se houvesse uma mudança repentina em processos ou tarefas, eu:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Usaria a oportunidade para explorar novas abordagens.</button>
+                    <button class="button" onclick="answerQuestion('D')">Ajustaria rapidamente para manter a eficiência.</button>
+                    <button class="button" onclick="answerQuestion('C')">Avaliaria as melhores práticas antes de implementar a mudança.</button>
+                    <button class="button" onclick="answerQuestion('S')">Faria ajustes para que a transição fosse suave para todos.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question16">
+                <h2>Pergunta 16</h2>
+                <p>Em um projeto, meu principal interesse é:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Encorajar a inovação e colaboração criativa.</button>
+                    <button class="button" onclick="answerQuestion('D')">Concluir com eficiência e dentro do prazo.</button>
+                    <button class="button" onclick="answerQuestion('C')">Explorar abordagens baseadas em dados e precisão.</button>
+                    <button class="button" onclick="answerQuestion('S')">Manter a harmonia e estabilidade do projeto.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question17">
+                <h2>Pergunta 17</h2>
+                <p>Na hora de resolver problemas, minha tendência é:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Encorajar a equipe a pensar fora da caixa.</button>
+                    <button class="button" onclick="answerQuestion('D')">Agir rapidamente para solucioná-los.</button>
+                    <button class="button" onclick="answerQuestion('C')">Fazer uma análise detalhada para uma solução informada.</button>
+                    <button class="button" onclick="answerQuestion('S')">Evitar que o problema afete a moral do time.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question18">
+                <h2>Pergunta 18</h2>
+                <p>Em relação a metas, prefiro que sejam:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Motivadoras e inovadoras.</button>
+                    <button class="button" onclick="answerQuestion('D')">Claras e desafiadoras.</button>
+                    <button class="button" onclick="answerQuestion('C')">Baseadas em dados e análises precisas.</button>
+                    <button class="button" onclick="answerQuestion('S')">Realistas e tranquilas.</button>
+                </div>
+            </div>
+
+            <div class="card hide" id="question19">
+                <h2>Pergunta 19</h2>
+                <p>Quando estou enfrentando um desafio, eu:</p>
+                <div class="button-group">
+                    <button class="button" onclick="answerQuestion('I')">Utilizo minha criatividade para encontrar soluções.</button>
+                    <button class="button" onclick="answerQuestion('D')">Busco soluções rápidas e eficazes.</button>
+                    <button class="button" onclick="answerQuestion('C')">Examino todas as opções com atenção aos detalhes.</button>
+                    <button class="button" onclick="answerQuestion('S')">Considero o impacto emocional antes de agir.</button>
+                </div>
+            </div>
 
             <div class="card hide" id="question20">
                 <h2>Pergunta 20</h2>
@@ -215,12 +402,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        const totalQuestions = 20;
+        let currentQuestion = 1;
+        const results = { D: 0, I: 0, S: 0, C: 0 };
 
-        // -----------------------------
-        // Funções Relacionadas ao Processo do Teste
-        // -----------------------------
-
-        // Função 1: Responde a uma pergunta
+        // Função para lidar com as respostas às perguntas
         function answerQuestion(profile) {
             results[profile]++;
             const nextQuestion = currentQuestion + 1;
@@ -234,17 +420,13 @@
             }
         }
 
-        // Função 2: Atualiza a barra de progresso
+        // Função para atualizar a barra de progresso
         function updateProgressBar() {
             const progress = (currentQuestion - 1) / totalQuestions * 100;
             document.getElementById('progress').style.width = progress + '%';
         }
 
-        // -----------------------------
-        // Funções Relacionadas à Determinação de Resultados
-        // -----------------------------
-
-        // Função 3: Determina o perfil DISC
+        // Função para determinar o perfil DISC
         function determineProfile(data, labels) {
             const detailedResult = document.getElementById('detailedResult');
 
@@ -271,7 +453,7 @@
             detailedResult.innerHTML = description;
         }
 
-        // Função 4: Retorna a descrição de um perfil único
+        // Função para obter a descrição do perfil único
         function getProfileDescription(profile) {
             switch (profile) {
                 case 'Dominância':
@@ -331,7 +513,7 @@
             }
         }
 
-        // Função 5: Retorna a descrição de perfis combinados
+        // Função para obter a descrição de perfis combinados
         function getCombinedProfileDescription(profile1, profile2, profile3 = '') {
             const profileMap = {
                 'D/I': `
@@ -511,11 +693,7 @@
             return profileMap[profiles] || '<p>Perfil não encontrado.</p>';
         }
 
-        // -----------------------------
-        // Funções Relacionadas à Exibição de Resultados
-        // -----------------------------
-
-        // Função 6: Mostra os resultados do teste
+        // Função para exibir os resultados do teste
         function showResults() {
             document.getElementById('questionContainer').style.display = 'none';
             document.getElementById('resultContainer').style.display = 'block';
@@ -556,17 +734,17 @@
             determineProfile(data, labels);
         }
 
-        // Função 7: Imprime os resultados
+        // Função para imprimir os resultados
         function printResults() {
             window.print();
         }
 
-        // Função 8: Reinicia o teste
+        // Função para reiniciar o teste
         function resetTest() {
-            // Reset logic here
             location.reload();
         }
 
     </script>
 </body>
+
 </html>
