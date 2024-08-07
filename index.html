@@ -33,13 +33,16 @@
             border-radius: 20px;
             margin-bottom: 20px;
             overflow: hidden;
+            height: 15px;
+            position: relative;
         }
 
         .progress {
-            height: 10px;
+            height: 100%;
             width: 0;
             background-color: #4caf50;
             transition: width 0.3s ease-in-out;
+            border-radius: 20px;
         }
 
         .card {
@@ -55,6 +58,7 @@
 
         .card h2 {
             margin-top: 0;
+            color: #333;
         }
 
         .button-group {
@@ -174,13 +178,24 @@
             margin: 5px 0;
             color: #555;
         }
+
+        .current {
+            border: 2px solid #2196f3;
+        }
+
+        .error {
+            color: red;
+            display: none;
+        }
     </style>
 </head>
 
 <body>
     <div class="container">
+        <h1>Bem-vindo ao Teste DISC</h1>
         <p>Por favor, responda ao teste de acordo com quem você realmente é, não como você deseja ser.</p>
         <input type="text" id="nameInput" placeholder="Digite seu nome" required>
+        <p id="error-message" class="error">Por favor, insira seu nome antes de começar.</p>
 
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
@@ -188,7 +203,7 @@
 
         <div id="questionContainer">
             <!-- Question Cards -->
-            <div class="card" id="question1">
+            <div class="card current" id="question1">
                 <h2>Pergunta 1</h2>
                 <p>Em uma reunião de equipe, meu foco principal costuma ser:</p>
                 <div class="button-group">
@@ -421,6 +436,7 @@
         </div>
     </div>
 
+    <!-- Separando o script em um arquivo externo -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const totalQuestions = 20;
@@ -428,11 +444,19 @@
         const results = { D: 0, I: 0, S: 0, C: 0 };
 
         function answerQuestion(profile) {
+            if (!document.getElementById('nameInput').value) {
+                document.getElementById('error-message').style.display = 'block';
+                return;
+            }
+
+            document.getElementById('error-message').style.display = 'none';
             results[profile]++;
             const nextQuestion = currentQuestion + 1;
             if (nextQuestion <= totalQuestions) {
                 document.getElementById(`question${currentQuestion}`).classList.add('hide');
                 document.getElementById(`question${nextQuestion}`).classList.remove('hide');
+                document.getElementById(`question${currentQuestion}`).classList.remove('current');
+                document.getElementById(`question${nextQuestion}`).classList.add('current');
                 currentQuestion = nextQuestion;
                 updateProgressBar();
             } else {
