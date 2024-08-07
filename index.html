@@ -594,142 +594,223 @@
             }
         }
 
-        function getCombinedProfileDescription(profile1, profile2, profile3 = '') {
-            const profileMap = {
-                'D/I': `
-                <div class="analysis-item">
-                    <h3>Incentivador (D/I)</h3>
-                    <p><strong>Emoções:</strong> Confia nas pessoas, entusiasta.</p>
-                    <p><strong>Alvo:</strong> Manter amizades, obter autoridade e prestígio.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Baseia-se na aceitação positiva e no entusiasmo dos outros.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de persuasão verbal, elogios e favores.</p>
-                    <p><strong>Valor para a equipe:</strong> Otimista, capaz de promover projetos, realiza projetos por meio de pessoas.</p>
-                    <p><strong>Exagera:</strong> Otimismo e bajulação.</p>
-                    <p><strong>Reação à pressão:</strong> Expressa seus sentimentos, pode se tornar relaxado e desorganizado.</p>
-                    <p><strong>Medo:</strong> Perder a aprovação social, conflitos.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Melhorar o uso do tempo, levar projetos até o fim, controlar emoções.</p>
-                </div>`,
-                'D/S': `
-                <div class="analysis-item">
-                    <h3>Defensor (D/S)</h3>
-                    <p><strong>Emoções:</strong> Mantém a calma em situações de pressão.</p>
-                    <p><strong>Alvo:</strong> Manter a segurança enquanto busca resultados.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Pela sua capacidade de balancear estabilidade e ação.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de confiança e persistência.</p>
-                    <p><strong>Valor para a equipe:</strong> Proporciona equilíbrio entre ação e estabilidade.</p>
-                    <p><strong>Exagera:</strong> Pode se tornar inflexível e teimoso.</p>
-                    <p><strong>Reação à pressão:</strong> Torna-se mais rígido.</p>
-                    <p><strong>Medo:</strong> Perder a segurança e controle.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Desenvolver maior flexibilidade e abertura a novas ideias.</p>
-                </div>`,
-                'D/C': `
-                <div class="analysis-item">
-                    <h3>Analisador (D/C)</h3>
-                    <p><strong>Emoções:</strong> Cauteloso e detalhista.</p>
-                    <p><strong>Alvo:</strong> Buscar resultados precisos e eficientes.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Pela precisão e aderência a normas.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de precisão e dados concretos.</p>
-                    <p><strong>Valor para a equipe:</strong> Proporciona soluções baseadas em dados e precisão.</p>
-                    <p><strong>Exagera:</strong> Pode se tornar crítico e inflexível.</p>
-                    <p><strong>Reação à pressão:</strong> Fica mais meticuloso e defensivo.</p>
-                    <p><strong>Medo:</strong> Erros e críticas.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Ser mais aberto a opiniões diferentes e se adaptar a mudanças.</p>
-                </div>`,
-                'I/S': `
-                <div class="analysis-item">
-                    <h3>Comunicador (I/S)</h3>
-                    <p><strong>Emoções:</strong> Confia nas pessoas e é geralmente otimista.</p>
-                    <p><strong>Alvo:</strong> Criar um ambiente harmonioso e interativo.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Pela sua capacidade de criar um ambiente positivo.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de empatia e comunicação aberta.</p>
-                    <p><strong>Valor para a equipe:</strong> Proporciona um ambiente harmonioso e de suporte.</p>
-                    <p><strong>Exagera:</strong> Pode ser excessivamente otimista e permissivo.</p>
-                    <p><strong>Reação à pressão:</strong> Torna-se mais relaxado e desorganizado.</p>
-                    <p><strong>Medo:</strong> Conflitos e perda de harmonia.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Melhorar o uso do tempo e controle de emoções.</p>
-                </div>`,
-                'I/C': `
-                <div class="analysis-item">
-                    <h3>Diplomata (I/C)</h3>
-                    <p><strong>Emoções:</strong> Confia nas pessoas e busca precisão.</p>
-                    <p><strong>Alvo:</strong> Criar um ambiente positivo enquanto busca precisão.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Pela sua capacidade de balancear entusiasmo e precisão.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de comunicação e dados.</p>
-                    <p><strong>Valor para a equipe:</strong> Proporciona um ambiente positivo e detalhista.</p>
-                    <p><strong>Exagera:</strong> Pode se tornar crítico e inflexível.</p>
-                    <p><strong>Reação à pressão:</strong> Fica mais meticuloso e defensivo.</p>
-                    <p><strong>Medo:</strong> Erros e conflitos.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Ser mais aberto a opiniões diferentes e se adaptar a mudanças.</p>
-                </div>`,
-                'S/C': `
-                <div class="analysis-item">
-                    <h3>Especialista (S/C)</h3>
-                    <p><strong>Emoções:</strong> Calmo e analítico.</p>
-                    <p><strong>Alvo:</strong> Manter estabilidade e precisão.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Pela sua capacidade de manter harmonia e aderência a normas.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de confiança e precisão.</p>
-                    <p><strong>Valor para a equipe:</strong> Proporciona estabilidade e precisão.</p>
-                    <p><strong>Exagera:</strong> Pode se tornar crítico e inflexível.</p>
-                    <p><strong>Reação à pressão:</strong> Torna-se mais meticuloso e defensivo.</p>
-                    <p><strong>Medo:</strong> Erros e perda de estabilidade.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Ser mais aberto a opiniões diferentes e se adaptar a mudanças.</p>
-                </div>`,
-                'D/I/S': `
-                <div class="analysis-item">
-                    <h3>Líder (D/I/S)</h3>
-                    <p><strong>Emoções:</strong> Confiante, entusiasta e estável.</p>
-                    <p><strong>Alvo:</strong> Alcançar resultados enquanto mantém harmonia.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Pela sua capacidade de alcançar resultados e manter harmonia.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de liderança e empatia.</p>
-                    <p><strong>Valor para a equipe:</strong> Proporciona liderança e harmonia.</p>
-                    <p><strong>Exagera:</strong> Pode se tornar inflexível e teimoso.</p>
-                    <p><strong>Reação à pressão:</strong> Torna-se mais rígido.</p>
-                    <p><strong>Medo:</strong> Perder a segurança e controle.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Desenvolver maior flexibilidade e abertura a novas ideias.</p>
-                </div>`,
-                'D/I/C': `
-                <div class="analysis-item">
-                    <h3>Inovador (D/I/C)</h3>
-                    <p><strong>Emoções:</strong> Confiante, entusiasta e analítico.</p>
-                    <p><strong>Alvo:</strong> Alcançar resultados enquanto busca precisão.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Pela sua capacidade de alcançar resultados e manter precisão.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de liderança e dados.</p>
-                    <p><strong>Valor para a equipe:</strong> Proporciona liderança e precisão.</p>
-                    <p><strong>Exagera:</strong> Pode se tornar crítico e inflexível.</p>
-                    <p><strong>Reação à pressão:</strong> Fica mais meticuloso e defensivo.</p>
-                    <p><strong>Medo:</strong> Erros e perda de controle.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Ser mais aberto a opiniões diferentes e se adaptar a mudanças.</p>
-                </div>`,
-                'D/S/C': `
-                <div class="analysis-item">
-                    <h3>Executivo (D/S/C)</h3>
-                    <p><strong>Emoções:</strong> Calmo, analítico e confiante.</p>
-                    <p><strong>Alvo:</strong> Alcançar resultados enquanto mantém estabilidade e precisão.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Pela sua capacidade de manter harmonia e precisão.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de liderança e confiança.</p>
-                    <p><strong>Valor para a equipe:</strong> Proporciona liderança e precisão.</p>
-                    <p><strong>Exagera:</strong> Pode se tornar crítico e inflexível.</p>
-                    <p><strong>Reação à pressão:</strong> Torna-se mais rígido.</p>
-                    <p><strong>Medo:</strong> Perder a segurança e controle.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Desenvolver maior flexibilidade e abertura a novas ideias.</p>
-                </div>`,
-                'I/S/C': `
-                <div class="analysis-item">
-                    <h3>Coordenador (I/S/C)</h3>
-                    <p><strong>Emoções:</strong> Otimista, estável e analítico.</p>
-                    <p><strong>Alvo:</strong> Manter harmonia enquanto busca precisão.</p>
-                    <p><strong>Forma de avaliar os outros:</strong> Pela sua capacidade de criar harmonia e precisão.</p>
-                    <p><strong>Forma de influenciar os outros:</strong> Através de empatia e dados.</p>
-                    <p><strong>Valor para a equipe:</strong> Proporciona harmonia e precisão.</p>
-                    <p><strong>Exagera:</strong> Pode se tornar crítico e inflexível.</p>
-                    <p><strong>Reação à pressão:</strong> Fica mais meticuloso e defensivo.</p>
-                    <p><strong>Medo:</strong> Conflitos e erros.</p>
-                    <p><strong>Para melhorar a eficiência:</strong> Ser mais aberto a opiniões diferentes e se adaptar a mudanças.</p>
-                </div>`
-            };
+       function getCombinedProfileDescription(profile1, profile2, profile3 = '') {
+    const profileMap = {
+        'D': `
+        <div class="analysis-item">
+            <h3>Visionário (D)</h3>
+            <p><strong>Características:</strong> Direto, determinado, competitivo.</p>
+            <p><strong>Emoções:</strong> Expressa raiva quando está sob pressão.</p>
+            <p><strong>Alvo:</strong> Superar obstáculos para alcançar resultados.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em sua habilidade de obter resultados.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Direto e assertivo, gosta de liderar e desafiar o status quo.</p>
+            <p><strong>Valor para a equipe:</strong> Iniciador de ação, impetuoso, está sempre em movimento e busca resultados.</p>
+            <p><strong>Exagera:</strong> Pode se tornar autoritário, impaciente.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais autoritário, impaciente.</p>
+            <p><strong>Medo:</strong> Ser aproveitado por outros.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Trabalhar na paciência, delegar tarefas, ouvir os outros.</p>
+        </div>`,
+        'I': `
+        <div class="analysis-item">
+            <h3>Persuasivo (I)</h3>
+            <p><strong>Características:</strong> Comunicativo, otimista, entusiasta.</p>
+            <p><strong>Emoções:</strong> Otimista, expressa entusiasmo.</p>
+            <p><strong>Alvo:</strong> Criar um ambiente positivo, estabelecer relações pessoais.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em sua capacidade de se relacionar.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Usa charme e motivação pessoal.</p>
+            <p><strong>Valor para a equipe:</strong> Motiva e inspira outros, cria um ambiente positivo.</p>
+            <p><strong>Exagera:</strong> Pode se tornar superficial, desorganizado.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais emocional e busca aprovação.</p>
+            <p><strong>Medo:</strong> Rejeição, ser ignorado ou subestimado.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Focar em detalhes, seguir prazos, planejar e organizar.</p>
+        </div>`,
+        'S': `
+        <div class="analysis-item">
+            <h3>Especialista (S)</h3>
+            <p><strong>Características:</strong> Estável, confiável.</p>
+            <p><strong>Emoções:</strong> Calmo e paciente.</p>
+            <p><strong>Alvo:</strong> Manter a estabilidade e a segurança.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se na lealdade e consistência.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de paciência e consistência.</p>
+            <p><strong>Valor para a equipe:</strong> Suporte constante, estabilidade.</p>
+            <p><strong>Exagera:</strong> Pode resistir a mudanças.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais reservado e protetor.</p>
+            <p><strong>Medo:</strong> Instabilidade e mudanças abruptas.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Ser mais aberto a mudanças, tomar iniciativa.</p>
+        </div>`,
+        'C': `
+        <div class="analysis-item">
+            <h3>Pensador Objetivo (C)</h3>
+            <p><strong>Características:</strong> Analítico, detalhista.</p>
+            <p><strong>Emoções:</strong> Focado e preciso.</p>
+            <p><strong>Alvo:</strong> Manter precisão e ordem.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em dados e precisão.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de fatos e lógica.</p>
+            <p><strong>Valor para a equipe:</strong> Preciso e analítico, mantém a qualidade.</p>
+            <p><strong>Exagera:</strong> Pode ser excessivamente crítico.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais crítico e focado em detalhes.</p>
+            <p><strong>Medo:</strong> Erros e imprecisões.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Desenvolver flexibilidade, aceitar feedback.</p>
+        </div>`,
+        'D/I': `
+        <div class="analysis-item">
+            <h3>Inspirador (D/I)</h3>
+            <p><strong>Características:</strong> Influente, motivador.</p>
+            <p><strong>Emoções:</strong> Energético e confiante.</p>
+            <p><strong>Alvo:</strong> Criar mudanças e inspirar os outros.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se na capacidade de impactar e motivar.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Mistura de assertividade e charme.</p>
+            <p><strong>Valor para a equipe:</strong> Inicia ideias inovadoras, inspira ação.</p>
+            <p><strong>Exagera:</strong> Pode se tornar impulsivo, negligenciar detalhes.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais competitivo e persuasivo.</p>
+            <p><strong>Medo:</strong> Falha em motivar ou perder o controle.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Melhorar a atenção aos detalhes, ouvir ativamente.</p>
+        </div>`,
+        'D/S': `
+        <div class="analysis-item">
+            <h3>Conquistador (D/S)</h3>
+            <p><strong>Características:</strong> Decidido, assertivo.</p>
+            <p><strong>Emoções:</strong> Controlado, mas pode ser passivo-agressivo.</p>
+            <p><strong>Alvo:</strong> Resolver problemas de forma eficiente.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se na capacidade de concluir tarefas.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de soluções práticas.</p>
+            <p><strong>Valor para a equipe:</strong> Capaz de lidar com crises, resolve problemas rapidamente.</p>
+            <p><strong>Exagera:</strong> Pode parecer insensível ou indiferente.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais controlado, mas mantém a direção.</p>
+            <p><strong>Medo:</strong> Perda de controle ou falha em concluir tarefas.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Desenvolver empatia, comunicação mais aberta.</p>
+        </div>`,
+        'D/C': `
+        <div class="analysis-item">
+            <h3>Criativo (D/C)</h3>
+            <p><strong>Características:</strong> Inovador, independente.</p>
+            <p><strong>Emoções:</strong> Confiança em suas próprias ideias.</p>
+            <p><strong>Alvo:</strong> Desenvolver novas soluções.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se na originalidade e criatividade.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de ideias inovadoras.</p>
+            <p><strong>Valor para a equipe:</strong> Traz novas ideias e soluções criativas.</p>
+            <p><strong>Exagera:</strong> Pode ignorar detalhes práticos.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais introspectivo e analítico.</p>
+            <p><strong>Medo:</strong> Falta de inovação ou rotina.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Prestar atenção a detalhes, ser mais prático.</p>
+        </div>`,
+        'I/S': `
+        <div class="analysis-item">
+            <h3>Conselheiro (I/S)</h3>
+            <p><strong>Características:</strong> Empático, solidário.</p>
+            <p><strong>Emoções:</strong> Caloroso e compreensivo.</p>
+            <p><strong>Alvo:</strong> Estabelecer relações de confiança.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em sua capacidade de entender e apoiar.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de compreensão e empatia.</p>
+            <p><strong>Valor para a equipe:</strong> Apoio emocional, mediação de conflitos.</p>
+            <p><strong>Exagera:</strong> Pode evitar conflitos necessários.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais passivo e busca harmonia.</p>
+            <p><strong>Medo:</strong> Rejeição e falta de aceitação.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Ser mais assertivo, enfrentar problemas.</p>
+        </div>`,
+        'I/C': `
+        <div class="analysis-item">
+            <h3>Promotor (I/C)</h3>
+            <p><strong>Características:</strong> Adaptável, comunicativo.</p>
+            <p><strong>Emoções:</strong> Sociável e acolhedor.</p>
+            <p><strong>Alvo:</strong> Criar um ambiente de aceitação.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se na capacidade de se adaptar.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de comunicação e adaptação.</p>
+            <p><strong>Valor para a equipe:</strong> Traz criatividade e flexibilidade.</p>
+            <p><strong>Exagera:</strong> Pode ser inconsistente ou pouco confiável.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais adaptável, mas pode evitar decisões difíceis.</p>
+            <p><strong>Medo:</strong> Ser rejeitado ou ignorado.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Estabelecer prazos e compromissos claros.</p>
+        </div>`,
+        'S/C': `
+        <div class="analysis-item">
+            <h3>Perfeccionista (S/C ou C/S)</h3>
+            <p><strong>Características:</strong> Meticuloso, organizado.</p>
+            <p><strong>Emoções:</strong> Preciso e focado.</p>
+            <p><strong>Alvo:</strong> Manter alta qualidade e precisão.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se na precisão e atenção aos detalhes.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de organização e precisão.</p>
+            <p><strong>Valor para a equipe:</strong> Manutenção de alta qualidade, atenção aos detalhes.</p>
+            <p><strong>Exagera:</strong> Pode ser inflexível ou crítico.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais crítico e focado em detalhes.</p>
+            <p><strong>Medo:</strong> Erros e falta de qualidade.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Desenvolver flexibilidade, aceitar feedback.</p>
+        </div>`,
+        'D/I/S': `
+        <div class="analysis-item">
+            <h3>Incentivador (D/I/S)</h3>
+            <p><strong>Características:</strong> Confiante, entusiasta, persuasivo.</p>
+            <p><strong>Emoções:</strong> Extrovertido, verdadeiro, aceita os outros.</p>
+            <p><strong>Alvo:</strong> Manter amizades, obter autoridade e prestígio.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se na aceitação positiva e no entusiasmo dos outros.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de persuasão verbal, elogios e favores.</p>
+            <p><strong>Valor para a equipe:</strong> Otimista, capaz de promover projetos, realiza projetos por meio de pessoas.</p>
+            <p><strong>Exagera:</strong> Otimismo e bajulação.</p>
+            <p><strong>Reação à pressão:</strong> Expressa seus sentimentos, pode se tornar relaxado e desorganizado.</p>
+            <p><strong>Medo:</strong> Perder a aprovação social, conflitos.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Melhorar o uso do tempo, levar projetos até o fim, controlar emoções.</p>
+        </div>`,
+        'D/C/S': `
+        <div class="analysis-item">
+            <h3>Questionador (D/C/S ou S/C/D)</h3>
+            <p><strong>Características:</strong> Investigativo, cuidadoso.</p>
+            <p><strong>Emoções:</strong> Cauteloso e analítico.</p>
+            <p><strong>Alvo:</strong> Buscar informações e entender detalhes.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em fatos e lógica.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de análise e fatos.</p>
+            <p><strong>Valor para a equipe:</strong> Traz precisão e análise detalhada.</p>
+            <p><strong>Exagera:</strong> Pode ser indeciso.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais cauteloso e analítico.</p>
+            <p><strong>Medo:</strong> Falta de dados ou imprecisão.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Ser mais decisivo, aceitar incertezas.</p>
+        </div>`,
+        'I/S/C': `
+        <div class="analysis-item">
+            <h3>Realista (I/S/C ou I/C/S)</h3>
+            <p><strong>Características:</strong> Equilibrado, compreensivo.</p>
+            <p><strong>Emoções:</strong> Empático, amigável.</p>
+            <p><strong>Alvo:</strong> Criar um ambiente harmonioso.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em sua capacidade de criar harmonia.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de cooperação e compromisso.</p>
+            <p><strong>Valor para a equipe:</strong> Mediação de conflitos, apoio constante.</p>
+            <p><strong>Exagera:</strong> Pode ser indeciso ou evitar confrontos.</p>
+            <p><strong>Reação à pressão:</strong> Retira-se para evitar conflito.</p>
+            <p><strong>Medo:</strong> Conflito e desarmonia.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Tomar decisões assertivas, enfrentar conflitos.</p>
+        </div>`,
+        'S/C/I': `
+        <div class="analysis-item">
+            <h3>Defensor (S/C/I ou S/I/C)</h3>
+            <p><strong>Características:</strong> Protetor, compreensivo.</p>
+            <p><strong>Emoções:</strong> Caloroso e acolhedor.</p>
+            <p><strong>Alvo:</strong> Proteger e apoiar outros.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se na lealdade e confiança.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de compreensão e apoio.</p>
+            <p><strong>Valor para a equipe:</strong> Apoio constante, harmonia.</p>
+            <p><strong>Exagera:</strong> Pode ser excessivamente protetor.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais passivo e busca harmonia.</p>
+            <p><strong>Medo:</strong> Conflito e desarmonia.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Tomar decisões assertivas, enfrentar conflitos.</p>
+        </div>`,
+        'S/D/C': `
+        <div class="analysis-item">
+            <h3>Questionador (S/D/C ou S/C/D)</h3>
+            <p><strong>Características:</strong> Investigativo, cuidadoso.</p>
+            <p><strong>Emoções:</strong> Cauteloso e analítico.</p>
+            <p><strong>Alvo:</strong> Buscar informações e entender detalhes.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em fatos e lógica.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Através de análise e fatos.</p>
+            <p><strong>Valor para a equipe:</strong> Traz precisão e análise detalhada.</p>
+            <p><strong>Exagera:</strong> Pode ser indeciso.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais cauteloso e analítico.</p>
+            <p><strong>Medo:</strong> Falta de dados ou imprecisão.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Ser mais decisivo, aceitar incertezas.</p>
+        </div>`
+    };
 
-            return profileMap[`${profile1[0]}/${profile2[0]}/${profile3 ? profile3[0] : ''}`.replace(/\/$/, '')] || '<p>Perfil não encontrado.</p>';
-        }
+    const profiles = [profile1[0], profile2[0], profile3 ? profile3[0] : ''].sort().join('/');
+    return profileMap[profiles] || '<p>Perfil não encontrado.</p>';
+}
 
         function printResults() {
             window.print();
