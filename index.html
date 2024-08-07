@@ -33,16 +33,13 @@
             border-radius: 20px;
             margin-bottom: 20px;
             overflow: hidden;
-            height: 15px;
-            position: relative;
         }
 
         .progress {
-            height: 100%;
+            height: 10px;
             width: 0;
             background-color: #4caf50;
             transition: width 0.3s ease-in-out;
-            border-radius: 20px;
         }
 
         .card {
@@ -58,7 +55,6 @@
 
         .card h2 {
             margin-top: 0;
-            color: #333;
         }
 
         .button-group {
@@ -156,46 +152,13 @@
                 font-size: 14px;
             }
         }
-
-        .detailed-analysis {
-            margin-top: 20px;
-        }
-
-        .analysis-item {
-            margin-bottom: 20px;
-            border: 1px solid #ddd;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-        }
-
-        .analysis-item h3 {
-            margin-top: 0;
-            color: #333;
-        }
-
-        .analysis-item p {
-            margin: 5px 0;
-            color: #555;
-        }
-
-        .current {
-            border: 2px solid #2196f3;
-        }
-
-        .error {
-            color: red;
-            display: none;
-        }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <h1>Bem-vindo ao Teste DISC</h1>
         <p>Por favor, responda ao teste de acordo com quem você realmente é, não como você deseja ser.</p>
         <input type="text" id="nameInput" placeholder="Digite seu nome" required>
-        <p id="error-message" class="error">Por favor, insira seu nome antes de começar.</p>
 
         <div class="progress-bar">
             <div class="progress" id="progress"></div>
@@ -203,7 +166,7 @@
 
         <div id="questionContainer">
             <!-- Question Cards -->
-            <div class="card current" id="question1">
+            <div class="card" id="question1">
                 <h2>Pergunta 1</h2>
                 <p>Em uma reunião de equipe, meu foco principal costuma ser:</p>
                 <div class="button-group">
@@ -421,237 +384,142 @@
                     <button class="button" onclick="answerQuestion('C')">Questiono e analiso se as políticas são atuais e relevantes.</button>
                     <button class="button" onclick="answerQuestion('S')">Asseguro que todos se sintam confortáveis com as políticas.</button>
                 </div>
-            </div>
-        </div>
-
-        <div id="resultContainer">
-            <h2>Resultado DISC</h2>
-            <p id="userName"></p>
-            <div id="chartContainer">
-                <canvas id="chart"></canvas>
-            </div>
-            <div id="detailedResult"></div>
-            <button class="button" onclick="printResults()">Imprimir Resultado</button>
-            <button class="button" onclick="resetTest()">Refazer o Teste</button>
-        </div>
     </div>
+</div>
 
-    <!-- Separando o script em um arquivo externo -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const totalQuestions = 20;
-        let currentQuestion = 1;
-        const results = { D: 0, I: 0, S: 0, C: 0 };
+<div id="resultContainer">
+    <h2>Resultado DISC</h2>
+    <p id="userName"></p>
+    <div id="chartContainer">
+        <canvas id="chart"></canvas>
+    </div>
+    <div id="detailedResult"></div>
+    <button class="button" onclick="printResults()">Imprimir Resultado</button>
+    <button class="button" onclick="resetTest()">Refazer o Teste</button>
+</div>
+</div>
 
-        function answerQuestion(profile) {
-            if (!document.getElementById('nameInput').value) {
-                document.getElementById('error-message').style.display = 'block';
-                return;
-            }
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
 
-            document.getElementById('error-message').style.display = 'none';
-            results[profile]++;
-            const nextQuestion = currentQuestion + 1;
-            if (nextQuestion <= totalQuestions) {
-                document.getElementById(`question${currentQuestion}`).classList.add('hide');
-                document.getElementById(`question${nextQuestion}`).classList.remove('hide');
-                document.getElementById(`question${currentQuestion}`).classList.remove('current');
-                document.getElementById(`question${nextQuestion}`).classList.add('current');
-                currentQuestion = nextQuestion;
-                updateProgressBar();
-            } else {
-                showResults();
-            }
-        }
+// -----------------------------
+// Funções Relacionadas ao Processo do Teste
+// -----------------------------
 
-        function updateProgressBar() {
-            const progress = (currentQuestion - 1) / totalQuestions * 100;
-            document.getElementById('progress').style.width = progress + '%';
-        }
+// Função 1: Responde a uma pergunta
+function answerQuestion(profile) {
+    results[profile]++;
+    const nextQuestion = currentQuestion + 1;
+    if (nextQuestion <= totalQuestions) {
+        document.getElementById(`question${currentQuestion}`).classList.add('hide');
+        document.getElementById(`question${nextQuestion}`).classList.remove('hide');
+        currentQuestion = nextQuestion;
+        updateProgressBar();
+    } else {
+        showResults();
+    }
+}
 
-        function showResults() {
-            document.getElementById('questionContainer').style.display = 'none';
-            document.getElementById('resultContainer').style.display = 'block';
+// Função 2: Atualiza a barra de progresso
+function updateProgressBar() {
+    const progress = (currentQuestion - 1) / totalQuestions * 100;
+    document.getElementById('progress').style.width = progress + '%';
+}
 
-            const name = document.getElementById('nameInput').value;
-            document.getElementById('userName').innerText = `Nome: ${name}`;
+// -----------------------------
+// Funções Relacionadas à Determinação de Resultados
+// -----------------------------
 
-            const data = [
-                (results.D / totalQuestions) * 100,
-                (results.I / totalQuestions) * 100,
-                (results.S / totalQuestions) * 100,
-                (results.C / totalQuestions) * 100
-            ];
-            const labels = ['Dominância', 'Influência', 'Estabilidade', 'Conformidade'];
+// Função 3: Determina o perfil DISC
+function determineProfile(data, labels) {
+    const detailedResult = document.getElementById('detailedResult');
 
-            const ctx = document.getElementById('chart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Pontuação DISC (%)',
-                        data: data,
-                        backgroundColor: ['#f44336', '#ff9800', '#4caf50', '#2196f3']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 100
-                        }
-                    }
-                }
-            });
+    // Ordenar perfis por pontuação decrescente
+    const sortedProfiles = data
+        .map((value, index) => ({ profile: labels[index], score: value }))
+        .sort((a, b) => b.score - a.score);
 
-            determineProfile(data, labels);
-        }
+    // Extrair perfis e pontuações
+    const { profile: profile1, score: score1 } = sortedProfiles[0];
+    const { profile: profile2, score: score2 } = sortedProfiles[1];
+    const { profile: profile3, score: score3 } = sortedProfiles[2];
 
-        function determineProfile(data, labels) {
-            const detailedResult = document.getElementById('detailedResult');
+    let description = '';
 
-            // Ordenar perfis por pontuação decrescente
-            const sortedProfiles = data
-                .map((value, index) => ({ profile: labels[index], score: value }))
-                .sort((a, b) => b.score - a.score);
+    if (score1 > 50) {
+        description = `<h3>Predominante Único: ${profile1}</h3>` + getProfileDescription(profile1);
+    } else if (score1 < 50 && score2 === score3) {
+        description = `<h3>Combinação de Três Perfis: ${profile1} + ${profile2} + ${profile3}</h3>` + getCombinedProfileDescription(profile1, profile2, profile3);
+    } else {
+        description = `<h3>Combinação de Dois Perfis: ${profile1} + ${profile2}</h3>` + getCombinedProfileDescription(profile1, profile2);
+    }
 
-            // Extrair perfis e pontuações
-            const { profile: profile1, score: score1 } = sortedProfiles[0];
-            const { profile: profile2, score: score2 } = sortedProfiles[1];
-            const { profile: profile3, score: score3 } = sortedProfiles[2];
+    detailedResult.innerHTML = description;
+}
 
-            let description = '';
+// Função 4: Retorna a descrição de um perfil único
+function getProfileDescription(profile) {
+    switch (profile) {
+        case 'Dominância':
+            return `
+            <div class="analysis-item">
+                <p><strong>Emoções:</strong> Expressa raiva quando está sob pressão.</p>
+                <p><strong>Alvo:</strong> Superar obstáculos para alcançar resultados.</p>
+                <p><strong>Forma de avaliar os outros:</strong> Baseia-se em sua habilidade de obter resultados.</p>
+                <p><strong>Forma de influenciar os outros:</strong> Direto e assertivo, gosta de liderar e desafiar o status quo.</p>
+                <p><strong>Valor para a equipe:</strong> Iniciador de ação, impetuoso, está sempre em movimento e busca resultados.</p>
+                <p><strong>Exagera:</strong> Pode se tornar autoritário, impaciente.</p>
+                <p><strong>Reação à pressão:</strong> Torna-se mais autoritário, impaciente.</p>
+                <p><strong>Medo:</strong> Ser aproveitado por outros.</p>
+                <p><strong>Para melhorar a eficiência:</strong> Trabalhar na paciência, delegar tarefas, ouvir os outros.</p>
+            </div>`;
+        case 'Influência':
+            return `
+            <div class="analysis-item">
+                <p><strong>Emoções:</strong> Otimista, expressa entusiasmo.</p>
+                <p><strong>Alvo:</strong> Criar um ambiente positivo, estabelecer relações pessoais.</p>
+                <p><strong>Forma de avaliar os outros:</strong> Baseia-se em sua capacidade de se relacionar.</p>
+                <p><strong>Forma de influenciar os outros:</strong> Usa charme e motivação pessoal.</p>
+                <p><strong>Valor para a equipe:</strong> Motiva e inspira outros, cria um ambiente positivo.</p>
+                <p><strong>Exagera:</strong> Pode se tornar superficial, desorganizado.</p>
+                <p><strong>Reação à pressão:</strong> Torna-se mais emocional e busca aprovação.</p>
+                <p><strong>Medo:</strong> Rejeição, ser ignorado ou subestimado.</p>
+                <p><strong>Para melhorar a eficiência:</strong> Focar em detalhes, seguir prazos, planejar e organizar.</p>
+            </div>`;
+        case 'Estabilidade':
+            return `
+            <div class="analysis-item">
+                <p><strong>Emoções:</strong> Geralmente calmo e equilibrado.</p>
+                <p><strong>Alvo:</strong> Manter um ambiente seguro e harmonioso.</p>
+                <p><strong>Forma de avaliar os outros:</strong> Através de sua capacidade de criar estabilidade.</p>
+                <p><strong>Forma de influenciar os outros:</strong> Pela paciência e pela criação de confiança.</p>
+                <p><strong>Valor para a equipe:</strong> Fornece suporte estável e tranquilidade.</p>
+                <p><strong>Exagera:</strong> Pode ser resistente a mudanças.</p>
+                <p><strong>Reação à pressão:</strong> Torna-se mais passivo e cauteloso.</p>
+                <p><strong>Medo:</strong> Perda de segurança e estabilidade.</p>
+                <p><strong>Para melhorar a eficiência:</strong> Desenvolver flexibilidade e disposição para mudanças.</p>
+            </div>`;
+        case 'Conformidade':
+            return `
+            <div class="analysis-item">
+                <p><strong>Emoções:</strong> Cauteloso e meticuloso.</p>
+                <p><strong>Alvo:</strong> Fazer as coisas corretamente e de forma precisa.</p>
+                <p><strong>Forma de avaliar os outros:</strong> Pela sua aderência a regras e normas.</p>
+                <p><strong>Forma de influenciar os outros:</strong> Através de precisão e atenção aos detalhes.</p>
+                <p><strong>Valor para a equipe:</strong> Fornece precisão e aderência a normas.</p>
+                <p><strong>Exagera:</strong> Pode se tornar crítico e inflexível.</p>
+                <p><strong>Reação à pressão:</strong> Torna-se mais meticuloso e defensivo.</p>
+                <p><strong>Medo:</strong> Críticas e erros.</p>
+                <p><strong>Para melhorar a eficiência:</strong> Ser mais aberto a opiniões diferentes e se adaptar a mudanças.</p>
+            </div>`;
+        default:
+            return `<p>Perfil não encontrado.</p>`;
+    }
+}
 
-            if (score1 > 50) {
-                description = `<h3>Predominante Único: ${profile1}</h3>` + getProfileDescription(profile1);
-            } else if (score1 < 50 && score2 === score3) {
-                description = `<h3>Combinação de Três Perfis: ${profile1} + ${profile2} + ${profile3}</h3>` + getCombinedProfileDescription(profile1, profile2, profile3);
-            } else {
-                description = `<h3>Combinação de Dois Perfis: ${profile1} + ${profile2}</h3>` + getCombinedProfileDescription(profile1, profile2);
-            }
-
-            detailedResult.innerHTML = description;
-        }
-
-        function getProfileDescription(profile) {
-            switch (profile) {
-                case 'Dominância':
-                    return `
-                    <div class="analysis-item">
-                        <p><strong>Emoções:</strong> Expressa raiva quando está sob pressão.</p>
-                        <p><strong>Alvo:</strong> Superar obstáculos para alcançar resultados.</p>
-                        <p><strong>Forma de avaliar os outros:</strong> Baseia-se em sua habilidade de obter resultados.</p>
-                        <p><strong>Forma de influenciar os outros:</strong> Direto e assertivo, gosta de liderar e desafiar o status quo.</p>
-                        <p><strong>Valor para a equipe:</strong> Iniciador de ação, impetuoso, está sempre em movimento e busca resultados.</p>
-                        <p><strong>Exagera:</strong> Pode se tornar autoritário, impaciente.</p>
-                        <p><strong>Reação à pressão:</strong> Torna-se mais autoritário, impaciente.</p>
-                        <p><strong>Medo:</strong> Ser aproveitado por outros.</p>
-                        <p><strong>Para melhorar a eficiência:</strong> Trabalhar na paciência, delegar tarefas, ouvir os outros.</p>
-                    </div>`;
-                case 'Influência':
-                    return `
-                    <div class="analysis-item">
-                        <p><strong>Emoções:</strong> Confia nas pessoas, entusiasta.</p>
-                        <p><strong>Alvo:</strong> Manter amizades, obter autoridade e prestígio.</p>
-                        <p><strong>Forma de avaliar os outros:</strong> Baseia-se na aceitação positiva e no entusiasmo dos outros.</p>
-                        <p><strong>Forma de influenciar os outros:</strong> Através de persuasão verbal, elogios e favores.</p>
-                        <p><strong>Valor para a equipe:</strong> Otimista, capaz de promover projetos, realiza projetos por meio de pessoas.</p>
-                        <p><strong>Exagera:</strong> Otimismo e bajulação.</p>
-                        <p><strong>Reação à pressão:</strong> Expressa seus sentimentos, pode se tornar relaxado e desorganizado.</p>
-                        <p><strong>Medo:</strong> Perder a aprovação social, conflitos.</p>
-                        <p><strong>Para melhorar a eficiência:</strong> Melhorar o uso do tempo, levar projetos até o fim, controlar emoções.</p>
-                    </div>`;
-                case 'Estabilidade':
-                    return `
-                    <div class="analysis-item">
-                        <p><strong>Emoções:</strong> Geralmente calmo e equilibrado.</p>
-                        <p><strong>Alvo:</strong> Manter um ambiente seguro e harmonioso.</p>
-                        <p><strong>Forma de avaliar os outros:</strong> Através de sua capacidade de criar estabilidade.</p>
-                        <p><strong>Forma de influenciar os outros:</strong> Pela paciência e pela criação de confiança.</p>
-                        <p><strong>Valor para a equipe:</strong> Fornece suporte estável e tranquilidade.</p>
-                        <p><strong>Exagera:</strong> Pode ser resistente a mudanças.</p>
-                        <p><strong>Reação à pressão:</strong> Torna-se mais passivo e cauteloso.</p>
-                        <p><strong>Medo:</strong> Perda de segurança e estabilidade.</p>
-                        <p><strong>Para melhorar a eficiência:</strong> Desenvolver flexibilidade e disposição para mudanças.</p>
-                    </div>`;
-                case 'Conformidade':
-                    return `
-                    <div class="analysis-item">
-                        <p><strong>Emoções:</strong> Cauteloso e meticuloso.</p>
-                        <p><strong>Alvo:</strong> Fazer as coisas corretamente e de forma precisa.</p>
-                        <p><strong>Forma de avaliar os outros:</strong> Pela sua aderência a regras e normas.</p>
-                        <p><strong>Forma de influenciar os outros:</strong> Através de precisão e atenção aos detalhes.</p>
-                        <p><strong>Valor para a equipe:</strong> Fornece precisão e aderência a normas.</p>
-                        <p><strong>Exagera:</strong> Pode se tornar crítico e inflexível.</p>
-                        <p><strong>Reação à pressão:</strong> Torna-se mais meticuloso e defensivo.</p>
-                        <p><strong>Medo:</strong> Críticas e erros.</p>
-                        <p><strong>Para melhorar a eficiência:</strong> Ser mais aberto a opiniões diferentes e se adaptar a mudanças.</p>
-                    </div>`;
-                default:
-                    return `<p>Perfil não encontrado.</p>`;
-            }
-        }
-
-       function getCombinedProfileDescription(profile1, profile2, profile3 = '') {
+// Função 5: Retorna a descrição de perfis combinados
+function getCombinedProfileDescription(profile1, profile2, profile3 = '') {
     const profileMap = {
-        'D': `
-        <div class="analysis-item">
-            <h3>Visionário (D)</h3>
-            <p><strong>Características:</strong> Direto, determinado, competitivo.</p>
-            <p><strong>Emoções:</strong> Expressa raiva quando está sob pressão.</p>
-            <p><strong>Alvo:</strong> Superar obstáculos para alcançar resultados.</p>
-            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em sua habilidade de obter resultados.</p>
-            <p><strong>Forma de influenciar os outros:</strong> Direto e assertivo, gosta de liderar e desafiar o status quo.</p>
-            <p><strong>Valor para a equipe:</strong> Iniciador de ação, impetuoso, está sempre em movimento e busca resultados.</p>
-            <p><strong>Exagera:</strong> Pode se tornar autoritário, impaciente.</p>
-            <p><strong>Reação à pressão:</strong> Torna-se mais autoritário, impaciente.</p>
-            <p><strong>Medo:</strong> Ser aproveitado por outros.</p>
-            <p><strong>Para melhorar a eficiência:</strong> Trabalhar na paciência, delegar tarefas, ouvir os outros.</p>
-        </div>`,
-        'I': `
-        <div class="analysis-item">
-            <h3>Persuasivo (I)</h3>
-            <p><strong>Características:</strong> Comunicativo, otimista, entusiasta.</p>
-            <p><strong>Emoções:</strong> Otimista, expressa entusiasmo.</p>
-            <p><strong>Alvo:</strong> Criar um ambiente positivo, estabelecer relações pessoais.</p>
-            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em sua capacidade de se relacionar.</p>
-            <p><strong>Forma de influenciar os outros:</strong> Usa charme e motivação pessoal.</p>
-            <p><strong>Valor para a equipe:</strong> Motiva e inspira outros, cria um ambiente positivo.</p>
-            <p><strong>Exagera:</strong> Pode se tornar superficial, desorganizado.</p>
-            <p><strong>Reação à pressão:</strong> Torna-se mais emocional e busca aprovação.</p>
-            <p><strong>Medo:</strong> Rejeição, ser ignorado ou subestimado.</p>
-            <p><strong>Para melhorar a eficiência:</strong> Focar em detalhes, seguir prazos, planejar e organizar.</p>
-        </div>`,
-        'S': `
-        <div class="analysis-item">
-            <h3>Especialista (S)</h3>
-            <p><strong>Características:</strong> Estável, confiável.</p>
-            <p><strong>Emoções:</strong> Calmo e paciente.</p>
-            <p><strong>Alvo:</strong> Manter a estabilidade e a segurança.</p>
-            <p><strong>Forma de avaliar os outros:</strong> Baseia-se na lealdade e consistência.</p>
-            <p><strong>Forma de influenciar os outros:</strong> Através de paciência e consistência.</p>
-            <p><strong>Valor para a equipe:</strong> Suporte constante, estabilidade.</p>
-            <p><strong>Exagera:</strong> Pode resistir a mudanças.</p>
-            <p><strong>Reação à pressão:</strong> Torna-se mais reservado e protetor.</p>
-            <p><strong>Medo:</strong> Instabilidade e mudanças abruptas.</p>
-            <p><strong>Para melhorar a eficiência:</strong> Ser mais aberto a mudanças, tomar iniciativa.</p>
-        </div>`,
-        'C': `
-        <div class="analysis-item">
-            <h3>Pensador Objetivo (C)</h3>
-            <p><strong>Características:</strong> Analítico, detalhista.</p>
-            <p><strong>Emoções:</strong> Focado e preciso.</p>
-            <p><strong>Alvo:</strong> Manter precisão e ordem.</p>
-            <p><strong>Forma de avaliar os outros:</strong> Baseia-se em dados e precisão.</p>
-            <p><strong>Forma de influenciar os outros:</strong> Através de fatos e lógica.</p>
-            <p><strong>Valor para a equipe:</strong> Preciso e analítico, mantém a qualidade.</p>
-            <p><strong>Exagera:</strong> Pode ser excessivamente crítico.</p>
-            <p><strong>Reação à pressão:</strong> Torna-se mais crítico e focado em detalhes.</p>
-            <p><strong>Medo:</strong> Erros e imprecisões.</p>
-            <p><strong>Para melhorar a eficiência:</strong> Desenvolver flexibilidade, aceitar feedback.</p>
-        </div>`,
         'D/I': `
         <div class="analysis-item">
             <h3>Inspirador (D/I)</h3>
@@ -805,6 +673,20 @@
             <p><strong>Reação à pressão:</strong> Torna-se mais cauteloso e analítico.</p>
             <p><strong>Medo:</strong> Falta de dados ou imprecisão.</p>
             <p><strong>Para melhorar a eficiência:</strong> Ser mais decisivo, aceitar incertezas.</p>
+        </div>`,
+        'S/I': `
+        <div class="analysis-item">
+            <h3>Colaborador (S/I)</h3>
+            <p><strong>Características:</strong> Apoio e confiança.</p>
+            <p><strong>Emoções:</strong> Gentil e sociável.</p>
+            <p><strong>Alvo:</strong> Criar um ambiente acolhedor.</p>
+            <p><strong>Forma de avaliar os outros:</strong> Através de suas habilidades sociais.</p>
+            <p><strong>Forma de influenciar os outros:</strong> Por meio de apoio emocional e confiança.</p>
+            <p><strong>Valor para a equipe:</strong> Cria um ambiente positivo e harmônico.</p>
+            <p><strong>Exagera:</strong> Pode evitar confrontos para manter a paz.</p>
+            <p><strong>Reação à pressão:</strong> Torna-se mais silencioso e pacificador.</p>
+            <p><strong>Medo:</strong> Conflito e falta de aceitação.</p>
+            <p><strong>Para melhorar a eficiência:</strong> Desenvolver assertividade e capacidade de decisão.</p>
         </div>`
     };
 
@@ -815,10 +697,62 @@
     return profileMap[profiles] || '<p>Perfil não encontrado.</p>';
 }
 
-        function printResults() {
-            window.print();
-        }
-    </script>
-</body>
+// -----------------------------
+// Funções Relacionadas à Exibição de Resultados
+// -----------------------------
 
+// Função 6: Mostra os resultados do teste
+function showResults() {
+    document.getElementById('questionContainer').style.display = 'none';
+    document.getElementById('resultContainer').style.display = 'block';
+
+    const name = document.getElementById('nameInput').value;
+    document.getElementById('userName').innerText = `Nome: ${name}`;
+
+    const data = [
+        (results.D / totalQuestions) * 100,
+        (results.I / totalQuestions) * 100,
+        (results.S / totalQuestions) * 100,
+        (results.C / totalQuestions) * 100
+    ];
+    const labels = ['Dominância', 'Influência', 'Estabilidade', 'Conformidade'];
+
+    const ctx = document.getElementById('chart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Pontuação DISC (%)',
+                data: data,
+                backgroundColor: ['#f44336', '#ff9800', '#4caf50', '#2196f3']
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    determineProfile(data, labels);
+}
+
+// Função 7: Imprime os resultados
+function printResults() {
+    window.print();
+}
+
+// Função 8: Reinicia o teste
+function resetTest() {
+    // Reset logic here
+    location.reload();
+}
+
+</script>
+</body>
 </html>
