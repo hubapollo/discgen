@@ -133,6 +133,21 @@
         .profile-details p {
             margin: 5px 0;
         }
+ /* Estilo de impressão */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .result, .result * {
+                visibility: visible;
+            }
+            .result {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 20px;
+            }
     </style>
 </head>
 <body>
